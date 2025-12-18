@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>APX – Academia BBVA | Componentes y Arquitectura</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">APX</div>
+      <div class="brandText">
+        <div class="title">Componentes APX</div>
+        <div class="subtitle">Academia BBVA · Guía interactiva</div>
+      </div>
+    </div>
+
+    <div class="topActions">
+      <div class="searchWrap">
+        <input id="searchInput" type="search" placeholder="Buscar (ej. DTO, JDBC, Control-M, BIND, TRX...)" />
+        <button id="clearSearch" class="btn ghost" title="Limpiar">✕</button>
+      </div>
+
+      <button id="toggleTheme" class="btn" title="Cambiar tema">🌙/☀️</button>
+      <button id="expandAll" class="btn ghost" title="Expandir todo">Expandir</button>
+      <button id="collapseAll" class="btn ghost" title="Colapsar todo">Colapsar</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav id="nav" class="nav">
+        <a class="navItem" href="#intro">APX – Introducción</a>
+        <a class="navItem" href="#unidad">Unidad de despliegue</a>
+        <a class="navItem" href="#onlineBatch">Online vs Batch</a>
+        <a class="navItem" href="#flujoOnline">Flujo ONLINE</a>
+        <a class="navItem" href="#flujoBatch">Flujo BATCH</a>
+        <a class="navItem" href="#componentes">Componentes APX</a>
+        <a class="navItem" href="#bdJdbc">Acceso BD + JDBC</a>
+        <a class="navItem" href="#nomenclatura">Nomenclatura</a>
+        <a class="navItem" href="#job">Job Batch</a>
+        <a class="navItem" href="#glosario">Glosario</a>
+        <a class="navItem" href="#quiz">Mini-Quiz</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="content">
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div class="heroText">
+          <h1>Arquitectura APX</h1>
+          <p>
+            Explora <b>Online</b>, <b>Batch</b>, <b>DTO</b>, <b>TRX</b>, <b>Interfaz</b>, <b>IMPL</b> y <b>Job</b>
+            con tarjetas interactivas, diagramas y búsqueda.
+          </p>
+          <div class="heroChips">
+            <span class="chip">Online</span>
+            <span class="chip">Batch</span>
+            <span class="chip">DTO</span>
+            <span class="chip">TRX</span>
+            <span class="chip">Interfaz</span>
+            <span class="chip">IMPL</span>
+            <span class="chip">Job</span>
+          </div>
+        </div>
+
+        <div class="heroStats">
+          <div class="stat">
+            <div class="statNum">≤ 180 ms</div>
+            <div class="statLabel">Objetivo ejecución TRX Online</div>
+          </div>
+          <div class="stat">
+            <div class="statNum">Control-M</div>
+            <div class="statLabel">Calendariza y programa Batch</div>
+          </div>
+          <div class="stat">
+            <div class="statNum">JDBC</div>
+            <div class="statLabel">Conector lógico a BD (Oracle)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTRO -->
+      <section class="block" id="intro" data-tags="apx introduccion arquitectura java bbva open source nube">
+        <h2>APX – Introducción</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>¿Qué es APX?</h3>
+            <ul>
+              <li>Arquitectura de Plataforma Extendida.</li>
+              <li>Extiende la arquitectura backend del banco.</li>
+              <li>Basada en <b>Java</b>, diseñada y construida por <b>BBVA</b>.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Características generales</h3>
+            <ul>
+              <li>Utiliza tecnologías de código abierto.</li>
+              <li>Ejecuta en entornos tradicionales y en la nube sin cambios grandes de empaquetado.</li>
+              <li>Facilita servicios bancarios transaccionales eficientes y seguros.</li>
+              <li>Busca simplificar construcción de <b>TRXs</b>, <b>Librerías</b> y <b>Jobs</b>.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- UNIDAD -->
+      <section class="block" id="unidad" data-tags="unidad despliegue deployment online batch trx libreria dto job">
+        <h2>Unidad de despliegue APX</h2>
+
+        <div class="tabs" data-tabs>
+          <div class="tabBar">
+            <button class="tabBtn isActive" data-tab="tabOnline">Online</button>
+            <button class="tabBtn" data-tab="tabBatch">Batch</button>
+          </div>
+
+          <div class="tabPanels">
+            <div class="tabPanel isActive" id="tabOnline">
+              <div class="card">
+                <h3>Unidad Online</h3>
+                <p class="muted">Componentes típicos:</p>
+                <ul class="bullets">
+                  <li><b>Transacción Online (TRX)</b></li>
+                  <li><b>Librerías</b> (Interfaz + IMPL)</li>
+                  <li><b>DTO</b></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tabPanel" id="tabBatch">
+              <div class="card">
+                <h3>Unidad Batch</h3>
+                <p class="muted">Componentes típicos:</p>
+                <ul class="bullets">
+                  <li><b>Job Batch</b></li>
+                  <li><b>Librerías</b> (Interfaz + IMPL)</li>
+                  <li><b>DTO</b></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ONLINE VS BATCH -->
+      <section class="block" id="onlineBatch" data-tags="online batch diferencias tiempo real lotes control-m 180 ms">
+        <h2>Características: ONLINE vs BATCH</h2>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>ONLINE</h3>
+            <ul>
+              <li><b>Tiempo real:</b> se procesa al momento de ingresar.</li>
+              <li>Se ejecuta N veces durante el día.</li>
+              <li><b>Tiempo objetivo:</b> no exceder <b>180 ms</b>.</li>
+              <li><b>Interacción humana:</b> vía web o apps móviles.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>BATCH</h3>
+            <ul>
+              <li><b>Por lotes:</b> recopila y procesa en un momento específico.</li>
+              <li>Ideal para <b>volumetría alta</b>: archivos, facturas, informes.</li>
+              <li><b>Sin interacción humana</b> directa.</li>
+              <li>Se calendariza/gestiona con <b>Control-M</b>.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- FLUJO ONLINE -->
+      <section class="block" id="flujoOnline" data-tags="flujo online trx interfaz impl bd libreria dto diagrama">
+        <h2>Componentes de un Proceso ONLINE</h2>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>Flujo general</h3>
+            <p class="muted">TRX Online → Interfaz → IMPL → Base de Datos</p>
+
+            <div class="diagramWrap" aria-label="Diagrama flujo online">
+              <svg viewBox="0 0 900 130" class="diagram">
+                <g class="node">
+                  <rect x="20" y="40" width="180" height="55" rx="14"></rect>
+                  <text x="110" y="74" text-anchor="middle">TRX Online</text>
+                </g>
+                <g class="arrow">
+                  <path d="M200 68 H270"></path>
+                  <path d="M270 68 l-10 -7 v14 z"></path>
+                </g>
+                <g class="node">
+                  <rect x="280" y="40" width="180" height="55" rx="14"></rect>
+                  <text x="370" y="74" text-anchor="middle">Interfaz</text>
+                </g>
+                <g class="arrow">
+                  <path d="M460 68 H530"></path>
+                  <path d="M530 68 l-10 -7 v14 z"></path>
+                </g>
+                <g class="node">
+                  <rect x="540" y="40" width="180" height="55" rx="14"></rect>
+                  <text x="630" y="74" text-anchor="middle">IMPL</text>
+                </g>
+                <g class="arrow">
+                  <path d="M720 68 H790"></path>
+                  <path d="M790 68 l-10 -7 v14 z"></path>
+                </g>
+                <g class="node">
+                  <rect x="800" y="40" width="80" height="55" rx="14"></rect>
+                  <text x="840" y="74" text-anchor="middle">BD</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="note">
+              Todo el flujo se apoya en una <b>Librería</b> que contiene <b>Interfaz</b>, <b>IMPL</b> y <b>DTO</b>.
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>¿Qué hace cada uno?</h3>
+            <div class="accordion">
+              <details class="acc" open data-tags="dto data transfer object datos">
+                <summary>DTO (Data Transfer Object)</summary>
+                <ul>
+                  <li>Representa datos que se transfieren entre componentes.</li>
+                  <li>Encapsula información (entrada/salida) sin exponer lógica interna.</li>
+                </ul>
+              </details>
+
+              <details class="acc" data-tags="trx online logica negocio validacion pagos">
+                <summary>TRX Online</summary>
+                <ul>
+                  <li>Disparador que ejecuta la lógica del negocio usando DTO.</li>
+                  <li>Invoca librería para operaciones: validación, pagos, actualización en tiempo real.</li>
+                </ul>
+              </details>
+
+              <details class="acc" data-tags="interfaz contrato metodos definicion">
+                <summary>Interfaz</summary>
+                <ul>
+                  <li>Define métodos a implementar (contrato).</li>
+                  <li>No contiene lógica; solo qué se debe hacer.</li>
+                  <li>Se usa desde TRX para invocar la IMPL.</li>
+                </ul>
+              </details>
+
+              <details class="acc" data-tags="impl implementacion logica negocio bd jdbc">
+                <summary>Implementación (IMPL)</summary>
+                <ul>
+                  <li>Contiene la lógica real del negocio.</li>
+                  <li>Realiza operaciones reales (incluye acceso a BD vía JDBC).</li>
+                </ul>
+              </details>
+
+              <details class="acc" data-tags="bd base datos oracle lectura escritura">
+                <summary>Base de Datos (BD)</summary>
+                <ul>
+                  <li>Persistencia central de datos.</li>
+                  <li>Lectura/escritura accedida por la IMPL.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- FLUJO BATCH -->
+      <section class="block" id="flujoBatch" data-tags="flujo batch job trx interfaz impl bd archivos salida logs reportes">
+        <h2>Componentes de un Proceso BATCH</h2>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>Definición general</h3>
+            <p>
+              Un proceso <b>Batch</b> procesa grandes volúmenes en un momento específico,
+              <b>sin interacción directa</b> del usuario.
+            </p>
+
+            <div class="diagramWrap" aria-label="Diagrama flujo batch">
+              <svg viewBox="0 0 900 160" class="diagram">
+                <g class="node">
+                  <rect x="20" y="50" width="220" height="55" rx="14"></rect>
+                  <text x="130" y="84" text-anchor="middle">TRX (Job Batch)</text>
+                </g>
+                <g class="arrow">
+                  <path d="M240 78 H310"></path>
+                  <path d="M310 78 l-10 -7 v14 z"></path>
+                </g>
+                <g class="node">
+                  <rect x="320" y="50" width="180" height="55" rx="14"></rect>
+                  <text x="410" y="84" text-anchor="middle">Interfaz</text>
+                </g>
+                <g class="arrow">
+                  <path d="M500 78 H570"></path>
+                  <path d="M570 78 l-10 -7 v14 z"></path>
+                </g>
+                <g class="node">
+                  <rect x="580" y="50" width="160" height="55" rx="14"></rect>
+                  <text x="660" y="84" text-anchor="middle">IMPL</text>
+                </g>
+                <g class="arrow">
+                  <path d="M740 78 H800"></path>
+                  <path d="M800 78 l-10 -7 v14 z"></path>
+                </g>
+                <g class="node">
+                  <rect x="810" y="50" width="70" height="55" rx="14"></rect>
+                  <text x="845" y="84" text-anchor="middle">BD</text>
+                </g>
+
+                <g class="node faint">
+                  <rect x="60" y="118" width="220" height="34" rx="12"></rect>
+                  <text x="170" y="140" text-anchor="middle">Entrada: Archivos (TXT, etc.)</text>
+                </g>
+                <g class="node faint">
+                  <rect x="600" y="118" width="260" height="34" rx="12"></rect>
+                  <text x="730" y="140" text-anchor="middle">Salida: resultados · logs · reportes</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="note">
+              Además de BD, el Batch puede <b>leer archivos de entrada</b> y <b>generar archivos de salida</b>.
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>TRX (Job Batch) – Características</h3>
+            <ul>
+              <li>Ejecuta el <b>Job Batch</b> y orquesta el flujo hacia la librería.</li>
+              <li>Procesa <b>grandes volúmenes</b> de información.</li>
+              <li>Puede consumir archivos (ej. TXT) y usa DTOs para entrada/salida.</li>
+              <li>Genera archivo de salida con resultados, logs o reportes.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- COMPONENTES APX -->
+      <section class="block" id="componentes" data-tags="componentes apx online batch dto trx interfaz impl job">
+        <h2>Profundizando en cada Componente APX</h2>
+
+        <div class="cards3">
+          <article class="card mini" data-tags="dto data transfer object encapsula datos">
+            <h3>DTO</h3>
+            <p>Objetos para transferir datos entre componentes. Encapsulan entrada/salida y reducen dependencias.</p>
+            <button class="btn small" data-scroll="#bdJdbc">Ver JDBC + BD</button>
+          </article>
+
+          <article class="card mini" data-tags="trx online transaccion restful aso">
+            <h3>TRX Online</h3>
+            <p>Unidad de aplicación en APX Online. Dispara la lógica de negocio y se basa en la Hoja ASO.</p>
+            <button class="btn small" data-scroll="#nomenclatura">Ver nomenclatura</button>
+          </article>
+
+          <article class="card mini" data-tags="interfaz contrato metodos public execute">
+            <h3>Interfaz</h3>
+            <p>Declara métodos expuestos (contrato). Sin lógica. Métodos públicos con formato <code>execute...</code>.</p>
+            <button class="btn small" data-scroll="#componentesInterfazImpl">Ver detalle</button>
+          </article>
+
+          <article class="card mini" data-tags="impl implementacion jdbc bind sql properties">
+            <h3>IMPL</h3>
+            <p>Lógica del negocio + acceso a BD (JDBC). Usa variables <b>BIND</b> en queries.</p>
+            <button class="btn small" data-scroll="#bdJdbc">Ver BIND</button>
+          </article>
+
+          <article class="card mini" data-tags="job batch control-m steps tasklet chunk reader processor writer joblauncher">
+            <h3>Job Batch</h3>
+            <p>Proceso masivo programado (Control-M). Puede ser Tasklet o Chunk y se ejecuta con JobLauncher.</p>
+            <button class="btn small" data-scroll="#job">Ver configuración</button>
+          </article>
+
+          <article class="card mini" data-tags="online batch diferencias 180 ms volumetria">
+            <h3>Online vs Batch</h3>
+            <p>Online: tiempo real y usuario. Batch: lotes, volumetría alta y calendarización.</p>
+            <button class="btn small" data-scroll="#onlineBatch">Comparar</button>
+          </article>
+        </div>
+
+        <article class="card" id="componentesInterfazImpl" data-tags="libreria interfaz impl bundle metodos public execute">
+          <h3>Librería: Interfaz + IMPL</h3>
+          <div class="grid2">
+            <div>
+              <h4>Interfaz</h4>
+              <ul>
+                <li>Declara los métodos expuestos.</li>
+                <li>Métodos con acceso <b>public</b>.</li>
+                <li>Formato: <code>Access [return] execute[VerbMethod][Entity](parameters)</code></li>
+                <li>Ejemplo: <code>public String executeInsertClient(String nombre, String id)</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>IMPL</h4>
+              <ul>
+                <li>Procesa la lógica del negocio.</li>
+                <li>Es el único componente con acceso directo a BD.</li>
+                <li>Se comunica con BD vía utilería <b>JDBC</b>.</li>
+                <li>Puede invocar otras librerías: máx. <b>9</b> y hasta <b>3 niveles</b>.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- BD + JDBC -->
+      <section class="block" id="bdJdbc" data-tags="jdbc bd oracle datasource standalone xml properties db1 bind apx add util">
+        <h2>Acceso a Base de Datos (DTO + JDBC)</h2>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>Arquitectura de acceso a BD</h3>
+            <ul>
+              <li>La Hoja <b>ASO</b> define parámetros de entrada/salida.</li>
+              <li>TRX maneja información con <b>DTOs</b>.</li>
+              <li>Interfaz + IMPL viven en Librería (Bundles).</li>
+              <li>Acceso a BD con conector lógico <b>JDBC</b> (ej. <code>db1</code>).</li>
+              <li>Motor típico: <b>Oracle</b>.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Configuración (entorno JBoss / APX)</h3>
+            <ul>
+              <li>Crear usuario para acceso al servidor (<b>add-user</b>).</li>
+              <li>Configurar conexión a BD local (usuario/contraseña).</li>
+              <li>Modificar <code>standalone.xml</code> y cargar nodo <b>DataSource</b>.</li>
+              <li>Cargar parámetros en formato JSON y gestionar credenciales en Consola APX.</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card" data-tags="properties sql select insert update bind variable :cdContrato">
+          <h3>IMPL – Consultas SQL en archivo <code>.properties</code></h3>
+          <p class="muted">Ejemplo (identificador + conector lógico + query + BIND):</p>
+
+          <pre class="code"><code>sql.select.contract=db1;SELECT CAMPO1 FROM TABLA1 WHERE CAMPO1 = :cdContrato</code></pre>
+
+          <div class="grid2">
+            <div class="callout">
+              <h4>¿Qué es BIND?</h4>
+              <ul>
+                <li>Parámetros dinámicos en la consulta.</li>
+                <li>Formato: <code>:NombreVariable</code> (ej. <code>:cdContrato</code>).</li>
+                <li>Evita valores fijos y mejora buenas prácticas.</li>
+              </ul>
+            </div>
+
+            <div class="callout">
+              <h4>Agregar utilería JDBC</h4>
+              <pre class="code"><code>apx add util -n jdbc -y</code></pre>
+              <p class="muted small">Esto prepara utilería/plantillas para trabajar el acceso a BD.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- NOMENCLATURA -->
+      <section class="block" id="nomenclatura" data-tags="nomenclatura mcur dto trx interfaz libreria impl job uu aa">
+        <h2>Nomenclatura (ejemplos)</h2>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>DTO</h3>
+            <p><code>MCURC101</code></p>
+            <ul>
+              <li><code>MCUR</code> → UUAA</li>
+              <li><code>C</code> → Identificador de DTO</li>
+              <li><code>101</code> → ID alfanumérico (3)</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>TRX Online</h3>
+            <p><code>MCURT001-01-MX</code></p>
+            <ul>
+              <li><code>MCUR</code> → UUAA</li>
+              <li><code>T</code> → Transacción</li>
+              <li><code>001</code> → Número TRX</li>
+              <li><code>01</code> → Versión</li>
+              <li><code>MX</code> → País</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>Interfaz (Librería)</h3>
+            <p><code>MCURR001</code></p>
+            <ul>
+              <li><code>R</code> → Librería</li>
+              <li><code>001</code> → Número de librería</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>IMPL (Librería)</h3>
+            <p><code>MCURR001IMPL</code></p>
+            <ul>
+              <li>Incluye sufijo <code>IMPL</code> como indicador de implementación.</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card">
+          <h3>Job Batch</h3>
+          <p><code>MCURJ001-01-MX</code></p>
+          <ul>
+            <li><code>J</code> → Job</li>
+            <li><code>001</code> → Número Job</li>
+            <li><code>01</code> → Versión</li>
+            <li><code>MX</code> → País</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- JOB -->
+      <section class="block" id="job" data-tags="job batch steps tasklet chunk reader processor writer beans joblauncher control-m">
+        <h2>Job – Transacción BATCH</h2>
+
+        <div class="grid2">
+          <article class="card">
+            <h3>Generalidades</h3>
+            <ul>
+              <li>Proceso masivo de información.</li>
+              <li>Se ejecuta de forma programada (normalmente con <b>Control-M</b>).</li>
+              <li>Puede trabajar con archivos y/o BD.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Configuración del procesamiento</h3>
+
+            <details class="acc" open data-tags="steps tasklet chunk">
+              <summary>1) Configuración mediante Steps</summary>
+              <div class="split">
+                <div>
+                  <h4>Tasklet</h4>
+                  <ul>
+                    <li>Tareas simples dentro de un Step.</li>
+                    <li>Resultado: Completed / Failed.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Chunk</h4>
+                  <ul>
+                    <li><b>Reader</b>: lee datos</li>
+                    <li><b>Processor</b>: procesa</li>
+                    <li><b>Writer</b>: escribe</li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+
+            <details class="acc" data-tags="beans joblauncher">
+              <summary>2) Configuración mediante Beans</summary>
+              <ul>
+                <li>Define cómo se ejecuta la lógica del Batch.</li>
+                <li>Recupera parámetros de entrada e invoca clases/librerías/DTOs.</li>
+                <li>Componente clave: <b>JobLauncher</b>.</li>
+              </ul>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <!-- GLOSARIO -->
+      <section class="block" id="glosario" data-tags="glosario apx trx dto jdbc bind control-m aso jboss datasource">
+        <h2>Glosario rápido</h2>
+        <div class="glossary">
+          <button class="glossItem" data-toast="TRX: componente que dispara la ejecución de la lógica (Online o Job Batch).">
+            TRX
+          </button>
+          <button class="glossItem" data-toast="DTO: objeto que encapsula y transporta datos entre componentes.">
+            DTO
+          </button>
+          <button class="glossItem" data-toast="Interfaz: contrato de métodos (sin lógica).">
+            Interfaz
+          </button>
+          <button class="glossItem" data-toast="IMPL: implementación con lógica real; único con acceso directo a BD.">
+            IMPL
+          </button>
+          <button class="glossItem" data-toast="JDBC: utilería/conector lógico para acceso a BD (ej. db1).">
+            JDBC
+          </button>
+          <button class="glossItem" data-toast="BIND: parámetros dinámicos en SQL (ej. :cdContrato).">
+            BIND
+          </button>
+          <button class="glossItem" data-toast="Control-M: herramienta para calendarización y programación de procesos Batch.">
+            Control-M
+          </button>
+          <button class="glossItem" data-toast="ASO: hoja que define parámetros de entrada/salida del servicio.">
+            ASO
+          </button>
+          <button class="glossItem" data-toast="DataSource: configuración de conexión a BD (usuario, contraseña, URL).">
+            DataSource
+          </button>
+          <button class="glossItem" data-toast="JobLauncher: componente que ejecuta el Job Batch.">
+            JobLauncher
+          </button>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="block" id="quiz" data-tags="quiz preguntas apx online batch dto trx jdbc control-m bind">
+        <h2>Mini-Quiz (para repasar)</h2>
+
+        <div class="card">
+          <form id="quizForm" class="quiz">
+            <div class="q">
+              <div class="qTitle">1) ¿Cuál es el objetivo típico de tiempo para una TRX Online?</div>
+              <label><input type="radio" name="q1" value="a" /> 1–2 segundos</label>
+              <label><input type="radio" name="q1" value="b" /> ≤ 180 ms</label>
+              <label><input type="radio" name="q1" value="c" /> 10 minutos</label>
+            </div>
+
+            <div class="q">
+              <div class="qTitle">2) ¿Qué herramienta se usa comúnmente para calendarizar Batch?</div>
+              <label><input type="radio" name="q2" value="a" /> Control-M</label>
+              <label><input type="radio" name="q2" value="b" /> Photoshop</label>
+              <label><input type="radio" name="q2" value="c" /> Excel</label>
+            </div>
+
+            <div class="q">
+              <div class="qTitle">3) ¿Qué componente contiene la lógica real del negocio y accede a BD?</div>
+              <label><input type="radio" name="q3" value="a" /> Interfaz</label>
+              <label><input type="radio" name="q3" value="b" /> IMPL</label>
+              <label><input type="radio" name="q3" value="c" /> DTO</label>
+            </div>
+
+            <div class="q">
+              <div class="qTitle">4) ¿Cómo se escribe una variable BIND en SQL?</div>
+              <label><input type="radio" name="q4" value="a" /> #cdContrato</label>
+              <label><input type="radio" name="q4" value="b" /> :cdContrato</label>
+              <label><input type="radio" name="q4" value="c" /> @cdContrato</label>
+            </div>
+
+            <div class="quizActions">
+              <button class="btn" type="submit">Calificar</button>
+              <button class="btn ghost" type="button" id="resetQuiz">Reiniciar</button>
+            </div>
+
+            <div id="quizResult" class="result" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="muted small">Componentes · APX © 2025</div>
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
