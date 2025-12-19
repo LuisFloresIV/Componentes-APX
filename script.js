@@ -192,3 +192,4 @@ resetQuiz.addEventListener("click", () => {
 
 // First run
 applySearch();
+
